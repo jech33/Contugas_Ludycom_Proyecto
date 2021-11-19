@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple usage of geolocation API</title>
+    <script type="text/javascript">
+        if (window.navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(getLocationCallback, errorCallback);
+        } else {
+            alert('Unfortunately your web browser doesn not support Geolocation API.');
+        }
+
+        function getLocationCallback(location) {
+            var geospatialMessage = '';
+            geospatialMessage += `Your geographic location is:
+            Latitude: ${location.coords.latitude}
+            Longitude: ${location.coords.longitude} `;
+            document.getElementById("Latitude").innerText = `Latitude: ${location.coords.latitude}`;
+            document.getElementById("Longitude").innerText = `Longitude: ${location.coords.longitude}`;
+            // alert(geospatialMessage);
+        }
+
+        function errorCallback(error) {
+            alert("something wrong!");
+        }
+    </script>
+</head>
+<body>
+    <h1>Your geographic location is: </h1>
+    <h2 id="Latitude"></h2>
+    <h2 id="Longitude"></h2>
+</body>
+</html>

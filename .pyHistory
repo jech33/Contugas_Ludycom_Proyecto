@@ -1,0 +1,22 @@
+﻿fgjgj
+a
+import arcpy import numpy  input = "C:\Users\Javier Echavez\Documents\ArcGIS\Projects\BACKUP_CONTUGAS 27-09-2021\BACKUP_CONTUGAS_27-09-2021.gdb" field1 = "OBJECTID" field2 = "NOMBRETENTATIVO" arr = arcpy.da.FeatureClassToNumPyArray(input, (field1, field2))
+print(MIDVCentros_Malla_Vial_ICA_S1)
+import arcpy
+import os
+print(MIDVCentros_Malla_Vial_ICA_S1)
+arcpy.ListTables()
+arcpy.arcobjects.Array("arcgis_CTG_VW_GIS_CLIENTES")
+arcpy.ListFeatureClasses()
+arcpy["DEPARTAMENTO"]
+arcpy.item
+arcpy.mapping.MapDocument("CURRENT")
+from arcpy import mapping
+arcpy.mp.LayerFile('DEPARTAMENTO')
+arcpy.mp.LayerFile(C:\Users\Javier Echavez\Documents\GIS\Proyecto_peru\4_Pruebas\githubCruzarDirecciones\Contugas_Ludycom_Direcciones\BACKUP_CONTUGAS_27-09-2021.gdb\DEPARTAMENTO) layerUsed = arcpy.mp.LayerFile(C:\Users\Javier Echavez\Documents\GIS\Proyecto_peru\4_Pruebas\githubCruzarDirecciones\Contugas_Ludycom_Direcciones\BACKUP_CONTUGAS_27-09-2021.gdb\DEPARTAMENTO) layerused print(layerUsed)
+arcpy.mp.LayerFile("C:\\Users\\Javier Echavez\\Documents\\GIS\\Proyecto_peru\\4_Pruebas\\githubCruzarDirecciones\\Contugas_Ludycom_Direcciones\\BACKUP_CONTUGAS_27-09-2021.gdb\\DEPARTAMENTO")
+arcpy.mp.LayerFile("C:\\Users\\Javier Echavez\\Documents\\GIS\\Proyecto_peru\\4_Pruebas\\githubCruzarDirecciones\\Contugas_Ludycom_Direcciones\\BACKUP_CONTUGAS_27-09-2021.gdb\\DEPARTAMENTO.lyr")
+arcpy.mp.LayerFile("C:\\Users\\Javier Echavez\\Documents\\GIS\\Proyecto_peru\\4_Pruebas\\githubCruzarDirecciones\\Contugas_Ludycom_Direcciones\\BACKUP_CONTUGAS_27-09-2021.gdb\\DEPARTAMENTO.lyrx")
+arcpy.mp.LayerFile("C:Users\\Javier Echavez\\Documents\\GIS\\Proyecto_peru\\4_Pruebas\\githubCruzarDirecciones\\Contugas_Ludycom_Direcciones\\BACKUP_CONTUGAS_27-09-2021.gdb\\DEPARTAMENTO.lyrx")
+arcpy.mp.LayerFile("C:\\Users\\Javier Echavez\\Documents\\ArcGIS\\Projects\\BACKUP_CONTUGAS 27-09-2021\\BACKUP_CONTUGAS_27-09-2021.gdb\\DEPARTAMENTO.lyr")
+arcpy.mp.LayerFile("C:\\Users\\Javier Echavez\\Documents\\ArcGIS\\Projects\\BACKUP_CONTUGAS 27-09-2021\\BACKUP_CONTUGAS_27-09-2021.gdb\\DEPARTAMENTO")
