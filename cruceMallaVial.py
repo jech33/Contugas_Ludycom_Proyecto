@@ -11,6 +11,7 @@ contugasViasFields = ["SHAPE@", "NOMBREVIA", 'TIPOVIA', 'UBIGEOIZQUIERDA', 'UBIG
 viasToInsert = "BACKUP_CONTUGAS_27-09-2021.gdb/MALLAVIAL"
 viasClause = "UBIGEOIZQUIERDA LIKE '110%' OR UBIGEODERECHA LIKE '110%'"
 cruceMallaVial = "BACKUP_CONTUGAS_27-09-2021.gdb/CRUCEMALLAVIAL"
+distrito = "BACKUP_CONTUGAS_27-09-2021.gdb/DISTRITO"
 
 ############ Lista todos los campos de la tabla ##########
 def fields(tablePath):
@@ -220,7 +221,7 @@ def updateCodigoLineasAdyacentes(layer):
     viasPorNombreProvincia = {}
     for provincia in provincias:
         clause = "UBIGEOIZQUIERDA LIKE '{0}%' OR UBIGEODERECHA LIKE '{0}%'".format(provincia)
-        with arcpy.da.UpdateCursor(layer, ['NOMBREVIA', 'CODIGOVIA', 'TIPOVIA', 'SHAPE@'], where_clause=(clause), sql_clause=(None, "ORDER BY NOMBREVIA, nombprov")) as cursorVias:
+        with arcpy.da.UpdateCursor(layer, ['NOMBREVIA', 'CODIGOVIA', 'TIPOVIA', 'SHAPE@'], where_clause=(clause), sql_clause=(None, "ORDER BY NOMBREVIA")) as cursorVias:
             for rowVias in cursorVias:
                 name = str(provincia) + " " + rowVias[0]
                 startPoint = (rowVias[3].firstPoint.X, rowVias[3].firstPoint.Y)
@@ -295,7 +296,7 @@ def updateCodigoLineasAdyacentes(layer):
     counterFinal = 0
     for provincia in provincias:
         clause = "UBIGEOIZQUIERDA LIKE '{0}%' OR UBIGEODERECHA LIKE '{0}%'".format(provincia)
-        with arcpy.da.UpdateCursor(layer, ['NOMBREVIA', 'CODIGOVIA', 'TIPOVIA', 'SHAPE@'], where_clause=(clause), sql_clause=(None, "ORDER BY NOMBREVIA, nombprov")) as cursorVias:
+        with arcpy.da.UpdateCursor(layer, ['NOMBREVIA', 'CODIGOVIA', 'TIPOVIA', 'SHAPE@'], where_clause=(clause), sql_clause=(None, "ORDER BY NOMBREVIA")) as cursorVias:
             for rowVias in cursorVias:
                 nombre = rowVias[0]
                 startPoint = (rowVias[3].firstPoint.X, rowVias[3].firstPoint.Y)
@@ -341,20 +342,21 @@ def updateCodigoNombreTipo(layer):
 
 def insertCruceMallaVial():
     with arcpy.da.SearchCursor(viasToInsert, [
-        'SHAPE@', 'NOMBREVIA', 'TIPOVIA', 'UBIGEOIZQUIERDA', 'UBIGEODERECHA', 'CODIGOVIA', 'TIPVIA'
+        'SHAPE@', 'NOMBREVIA', 'TIPOVIA', 'UBIGEOIZQUIERDA', 'UBIGEODERECHA', 'CODIGOVIA'
     ]) as cursor:
         vias = [list(rowVias) for rowVias in cursor]
 
     with arcpy.da.InsertCursor(cruceMallaVial, [
-        'SHAPE@', 'NOMBREVIA', 'TIPOVIA', 'UBIGEO', 'CODIGOVIA', 'TIPVIA'
+        'SHAPE@', 'NOMBREVIA', 'TIPOVIA', 'CODIGOVIA'
     ]) as cursorCruce:
         for via in vias:
-            izquierda = [via[0], via[1], via[2], via[3], via[5], via[6]]
-            derecha = [via[0], via[1], via[2], via[4], via[5], via[6]]
+            izquierda = [via[0], via[1], via[2], via[3]]
+            derecha = [via[0], via[1], via[2], via[3]]
+            # En caso de que sea necesario duplicar registros por ubigeo
             if izquierda[3] == derecha[3]:
                 cursorCruce.insertRow(izquierda)
             else:
-                cursorCruce.insertRow(izquierda)
+                # cursorCruce.insertRow(izquierda)
                 cursorCruce.insertRow(derecha)
     print("Registros insertados en CRUCEMALLAVIAL")
 
@@ -422,6 +424,8 @@ def estadisticasMallaVial():
         print(i)
     print("")
 
+def arreglarSN(capa):    
+    pass
 
 ##################################################################################################
 
@@ -434,12 +438,15 @@ def estadisticasMallaVial():
 ### Cambiar nombre a las vias para quitar el prefijo (e.g. "AVENIDA")
 # changeName(contugasVias)
 
+### Actualizar UBIGEOS
+
 ### Actualizar el campo CODIGOSEGMENTOVIA
 # updateCodigoSegmentoVia(contugasVias)
+updateCodigoSegmentoVia(viasToInsert)
 
 ### Actualizar el campo CODIGOVIA
 # updateCodigoNombreTipo(contugasVias)
-# updateCodigoLineasAdyacentes(contugasVias)
+updateCodigoLineasAdyacentes(viasToInsert)
 
 ### Insertar filas nuevas MALLAVIAL
 # insertRow()
@@ -448,5 +455,8 @@ def estadisticasMallaVial():
 estadisticasMallaVial()
 
 ### Crear CRUCEMALLAVIAL
-# insertCruceMallaVial()
-# dissolveCruceMallaVial()
+insertCruceMallaVial()
+dissolveCruceMallaVial()
+
+### Arreglar valores SN
+# arreglarSN()
