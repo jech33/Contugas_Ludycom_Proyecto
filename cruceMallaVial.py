@@ -261,7 +261,7 @@ def updateCodigoLineasAdyacentes(layer):
         codigosVertices[code] = {"name": "", "vertex":[], "vias": []}
         for viaAComparar in viasPorNombreProvincia[key]:
             nombre = viaAComparar[0]
-            if key[-2:] == "SN" or "SN" in key:
+            if (key[-2:] == "SN") or ("SN" in key) or ("SIN NOMBRE" in key):
                 code = str(key[:4]) + str(i)
                 codigosVertices[code] = {"name": "", "vertex":[], "vias": []}
                 codigosVertices[code]["name"] =  nombre
@@ -326,9 +326,9 @@ def updateCodigoNombreTipo(layer):
             counter = 1
             for rowVias in cursorVias:
                 key = rowVias[2] + " " + rowVias[0]
-                if key in codigos and key[-2:] != "SN":
+                if key in codigos and key[-2:] != "SN" and key != "SIN NOMBRE":
                     rowVias[1] = codigos[key]
-                elif key[-2:] == "SN":
+                elif key[-2:] == "SN" or key == "SIN NOMBRE":
                     rowVias[1] = provincia + str(counter)
                     counter += 1
                 else:
@@ -406,7 +406,7 @@ def estadisticasMallaVial():
         vias = [list(rowVias) for rowVias in cursor]
         
     for via in vias:
-        if via[1] == "SN":
+        if via[1] == "SN" or via[1] == "SIN NOMBRE":
             countSN += 1
         if via[6] not in codigos:
             codigos[via[6]] = {"times":1, "name": via[1]}
